@@ -8,17 +8,14 @@ import com.projectronin.fhir.r4.Reference
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-import javax.swing.text.AbstractDocument.Content
-
 class DocumentReferenceExtKtTest {
     private val tenantId = "apposnd"
     private val fhirId = "ehSXdmGPEBc--oKUrkz19VQ3"
     private val patientId = "apposnd-e63wRTbPfr1p8UW81d8Seiw3"
     private val dataAuthority = "EHR Data Authority"
     private val url = "https://images.squarespace-cdn.com/content/v1/" +
-            "642adca97e8fbd450fafb96c/dccea417-fac7-4641-b301-8ccb2772f912/" +
-            "Ronin+Logo+-+White+Text+Transparent+Bg+-+Large.png?format=1500w"
+        "642adca97e8fbd450fafb96c/dccea417-fac7-4641-b301-8ccb2772f912/" +
+        "Ronin+Logo+-+White+Text+Transparent+Bg+-+Large.png?format=1500w"
 
     private val docRef = DocumentReference().apply {
         subject = Reference().apply {
