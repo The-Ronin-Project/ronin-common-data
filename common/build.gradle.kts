@@ -5,5 +5,7 @@ plugins {
 dependencies {
     implementation(libs.kotlin.logging)
     implementation(libs.micrometer.statsd)
-    api("com.projectronin.fhir:common-fhir-r4-models:1.3.0")
+    api(libs.common.fhir.r4.models)
+
+    testImplementation(libs.assertj)
 }
