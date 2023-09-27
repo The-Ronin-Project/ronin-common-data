@@ -7,3 +7,15 @@ val Identifier.isTenantId: Boolean
 
 val List<Identifier>.tenantId: String?
     get() = find { it.isTenantId }?.value
+
+val Identifier.isDataAuthorityId: Boolean
+    get() = system?.equals("http://projectronin.com/id/dataAuthorityId") ?: false
+
+val List<Identifier>.dataAuthority: String?
+    get() = find { it.isDataAuthorityId }?.value
+
+val Identifier.isFhirId: Boolean
+    get() = system?.equals("http://projectronin.com/id/fhir") ?: false
+
+val List<Identifier>.fhirId: String?
+    get() = find { it.isFhirId }?.value
