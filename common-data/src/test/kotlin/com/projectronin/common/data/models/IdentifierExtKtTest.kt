@@ -3,8 +3,10 @@ package com.projectronin.common.data.models
 import com.projectronin.fhir.r4.Identifier
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 
-class IndentifierExtKtTest {
+class IdentifierExtKtTest {
     private val tenantId = "apposnd"
     private val fhirId = "ehSXdmGPEBc--oKUrkz19VQ3"
     private val dataAuthority = "EHR Data Authority"
@@ -58,5 +60,25 @@ class IndentifierExtKtTest {
     @Test
     fun getFhirId() {
         assertThat(listOf(dataAuthorityIdentifier, tenantIdentifier, fhirIdentifier).fhirId).isEqualTo(fhirId)
+    }
+
+    @Test
+    fun `nothing found test`() {
+        val emptyList = emptyList<Identifier>()
+        assertThrows<IllegalArgumentException> { emptyList.tenantId }
+        assertThrows<IllegalArgumentException> { emptyList.dataAuthority }
+        assertThrows<IllegalArgumentException> { emptyList.fhirId }
+
+        assertThat(emptyList.tenantIdOrNull).isNull()
+        assertThat(emptyList.dataAuthorityOrNull).isNull()
+        assertThat(emptyList.fhirIdOrNull).isNull()
+    }
+
+    @Test
+    fun `system null test`() {
+        val emptyIdentifier = Identifier()
+        assertThat(emptyIdentifier.isTenantId).isEqualTo(false)
+        assertThat(emptyIdentifier.isDataAuthorityId).isEqualTo(false)
+        assertThat(emptyIdentifier.isFhirId).isEqualTo(false)
     }
 }
