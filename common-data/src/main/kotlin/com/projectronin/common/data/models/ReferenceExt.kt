@@ -5,19 +5,19 @@ import com.projectronin.fhir.r4.Reference
 val Reference.isPatient: Boolean
     get() = type?.equals("Patient") == true
 
-val Reference.patientId: String?
-    get() = when (isPatient) {
-        true -> reference?.id
-        false -> null
+val Reference.patientId: String
+    get() = run {
+        require(isPatient)
+        requireNotNull(reference?.id)
     }
 
 val Reference.isProvider: Boolean
     get() = type?.equals("Practitioner") == true
 
-val Reference.providerId: String?
-    get() = when (isProvider) {
-        true -> reference?.id
-        false -> null
+val Reference.providerId: String
+    get() = run {
+        require(isProvider)
+        requireNotNull(reference?.id)
     }
 
 private val String.id

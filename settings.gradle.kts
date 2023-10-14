@@ -1,7 +1,7 @@
 rootProject.name = "ronin-common-data-root"
 
 // libraries
-include(":common")
+include(":common-data")
 
 // catalog
 include(":ronin-common-data-catalog")

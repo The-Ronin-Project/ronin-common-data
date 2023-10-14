@@ -4,7 +4,7 @@ import com.projectronin.fhir.r4.Identifier
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class IndentifierExtKtTest {
+class IdentifierExtKtTest {
     private val tenantId = "apposnd"
     private val fhirId = "ehSXdmGPEBc--oKUrkz19VQ3"
     private val dataAuthority = "EHR Data Authority"

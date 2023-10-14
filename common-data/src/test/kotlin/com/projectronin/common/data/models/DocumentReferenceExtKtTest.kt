@@ -62,7 +62,7 @@ class DocumentReferenceExtKtTest {
 
     @Test
     fun getGetUrlAttachments() {
-        val urlAttachments = docRef.getUrlAttachments
+        val urlAttachments = docRef.getUrlAttachments()
         assertThat(urlAttachments.size).isEqualTo(1)
         assertThat(urlAttachments[0].url).isEqualTo(url)
     }
