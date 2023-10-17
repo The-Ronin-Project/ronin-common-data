@@ -14,10 +14,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: test and build
-        uses: projectronin/github/.github/actions/basic-gradle-build-publish@basic_gradle_build_publish/v4
+        uses: projectronin/github/.github/actions/basic-gradle-build-publish@basic_gradle_build_publish/v1
         with:
           nexus_user: ${{ secrets.NEXUS_MAVEN_USER }}
           nexus_token: ${{ secrets.NEXUS_MAVEN_TOKEN }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           sonar_token: ${{ secrets.SONAR_TOKEN }}
           sonar_host_url: ${{ secrets.SONAR_HOST_URL }}
+          use_codecov: false
