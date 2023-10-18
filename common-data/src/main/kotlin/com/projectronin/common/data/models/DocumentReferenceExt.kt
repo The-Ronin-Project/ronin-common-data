@@ -10,6 +10,16 @@ val DocumentReference.patientId: String
 val DocumentReference.tenantId: String
     get() = requireNotNull(identifier?.tenantId) { "Identifier is null" }
 
+val DocumentReference.typeLoincCode: String
+    get() = requireNotNull(typeLoincCodeOrNull)
+
+val DocumentReference.typeLoincCodeOrNull: String?
+    get() = type?.coding?.firstOrNull { it.isLoinc }?.code
+
+val DocumentReference.authorDisplay: String
+    get() = getAuthorsByType(ReferenceType.PRACTITIONER).filter { it.display != null }
+        .joinToString("; ") { it.display.toString() } // Semicolon due to titles
+
 fun DocumentReference.getUrlAttachments(): List<Attachment> = content
     .filter { it.attachment.isUrlAttachment }
     .map { content -> content.attachment }
@@ -21,18 +31,4 @@ fun DocumentReference.getAuthorsByType(referenceType: ReferenceType? = null): Li
             else -> it
         }
     }?.toList() ?: emptyList()
-}
-
-fun DocumentReference.getAuthorDisplay(): String {
-    return getAuthorsByType(ReferenceType.PRACTITIONER).filter { it.display != null }
-        // Semicolon due to titles
-        .joinToString("; ") { it.display.toString() }
-}
-
-fun DocumentReference.getTypeLoincCode(): String {
-    return requireNotNull(getTypeLoincCodeOrNull())
-}
-
-fun DocumentReference.getTypeLoincCodeOrNull(): String? {
-    return type?.coding?.firstOrNull { it.isLoinc }?.code
 }
