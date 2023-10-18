@@ -14,12 +14,11 @@ fun DocumentReference.getUrlAttachments(): List<Attachment> = content
     .filter { it.attachment.isUrlAttachment }
     .map { content -> content.attachment }
 
-fun DocumentReference.getAuthorsByType(type: String? = null): List<Reference> {
+fun DocumentReference.getAuthorsByType(referenceType: ReferenceType? = null): List<Reference> {
     return this.author?.let {
-        when (type) {
-            is String -> it.filter { author: Reference -> author.type?.equals(type, true) ?: false }
+        when (referenceType?.type) {
+            is String -> it.filter { author: Reference -> author.isType(referenceType) }
             else -> it
         }
     }?.toList() ?: emptyList()
 }
-
