@@ -52,6 +52,12 @@ class DocumentReferenceExtKtTest {
             Reference().apply {
                 type = "Practitioner"
                 reference = "Practitioner/some-provider-id"
+                display = "Dr. John Doe"
+            },
+            Reference().apply {
+                type = "Practitioner"
+                reference = "Practitioner/another-provider-id"
+                display = "Dr. Jane Ronin"
             },
             Reference().apply {
                 type = "NotProvider"
@@ -80,12 +86,23 @@ class DocumentReferenceExtKtTest {
     @Test
     fun getAuthorsByTypeTest() {
         val providerAuthors = docRef.getAuthorsByType(ReferenceType.PRACTITIONER)
-        assertThat(providerAuthors.size).isEqualTo(1)
+        assertThat(providerAuthors.size).isEqualTo(2)
         assertThat(providerAuthors[0].reference).isEqualTo("Practitioner/some-provider-id")
 
         val allAuthors = docRef.getAuthorsByType()
-        assertThat(allAuthors.size).isEqualTo(2)
+        assertThat(allAuthors.size).isEqualTo(3)
         assertThat(allAuthors[0].reference).isEqualTo("Practitioner/some-provider-id")
-        assertThat(allAuthors[1].reference).isEqualTo("NotProvider/some-not-provider-id")
+        assertThat(allAuthors[1].reference).isEqualTo("Practitioner/another-provider-id")
+        assertThat(allAuthors[2].reference).isEqualTo("NotProvider/some-not-provider-id")
+    }
+
+    @Test
+    fun getAuthorDisplayNullTest() {
+        assertThat(DocumentReference().getAuthorDisplay()).isEqualTo("")
+    }
+
+    @Test
+    fun getAuthorDisplayTest() {
+        assertThat(docRef.getAuthorDisplay()).isEqualTo("Dr. John Doe; Dr. Jane Ronin")
     }
 }

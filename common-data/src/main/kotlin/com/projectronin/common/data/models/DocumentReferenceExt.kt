@@ -22,3 +22,17 @@ fun DocumentReference.getAuthorsByType(referenceType: ReferenceType? = null): Li
         }
     }?.toList() ?: emptyList()
 }
+
+fun DocumentReference.getAuthorDisplay(): String {
+    return getAuthorsByType(ReferenceType.PRACTITIONER).filter { it.display != null }
+        // Semicolon due to titles
+        .joinToString("; ") { it.display.toString() }
+}
+
+fun DocumentReference.getTypeLoincCode(): String {
+    return requireNotNull(getTypeLoincCodeOrNull())
+}
+
+fun DocumentReference.getTypeLoincCodeOrNull(): String? {
+    return type?.coding?.firstOrNull { it.isLoinc }?.code
+}
