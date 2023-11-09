@@ -14,8 +14,8 @@ val Reference.isPatient: Boolean
 
 val Reference.patientId: String
     get() = run {
-        require(isPatient)
-        requireNotNull(reference?.id)
+        require(isPatient) { "not a patient" }
+        requireNotNull(reference?.id) { "patient id is missing" }
     }
 
 val Reference.isProvider: Boolean
@@ -23,8 +23,8 @@ val Reference.isProvider: Boolean
 
 val Reference.providerId: String
     get() = run {
-        require(isProvider)
-        requireNotNull(reference?.id)
+        require(isProvider) { "not a provider" }
+        requireNotNull(reference?.id) { "provider id is missing" }
     }
 
 fun Reference.isType(referenceType: ReferenceType) = type?.equals(referenceType.type, true) ?: false
