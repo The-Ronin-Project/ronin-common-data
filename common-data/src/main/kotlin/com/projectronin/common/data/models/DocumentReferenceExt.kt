@@ -11,7 +11,7 @@ val DocumentReference.tenantId: String
     get() = requireNotNull(identifier?.tenantId) { "Identifier is null" }
 
 val DocumentReference.typeLoincCode: String
-    get() = requireNotNull(typeLoincCodeOrNull)
+    get() = requireNotNull(typeLoincCodeOrNull) { "Type loinc code is missing" }
 
 val DocumentReference.typeLoincCodeOrNull: String?
     get() = type?.coding?.firstOrNull { it.isLoinc }?.code
