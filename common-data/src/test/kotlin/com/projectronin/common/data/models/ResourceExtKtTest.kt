@@ -63,42 +63,42 @@ class ResourceExtKtTest {
         fun `ronin-nlpDetectedVisit with one profile`() {
             val resource = resourceWithDisplayName("http://projectronin.io/fhir/StructureDefinition/ronin-nlpDetectedVisit")
 
-            assertThat(resource.displayName).isEqualTo("ED Visit")
+            assertThat(resource.displayName).isEqualTo("Nlp Detected Visit")
         }
 
         @Test
         fun `ronin-nlpDetectedVisit picks first profile`() {
             val resource = resourceWithDisplayName("http://projectronin.io/fhir/StructureDefinition/ronin-nlpDetectedVisit", "http://another/profile")
 
-            assertThat(resource.displayName).isEqualTo("ED Visit")
+            assertThat(resource.displayName).isEqualTo("Nlp Detected Visit")
         }
 
         @Test
         fun `ronin-nlpDetectedCancerStaging with one profile`() {
             val resource = resourceWithDisplayName("http://projectronin.io/fhir/StructureDefinition/ronin-nlpDetectedCancerStaging")
 
-            assertThat(resource.displayName).isEqualTo("Detected Cancer Staging")
+            assertThat(resource.displayName).isEqualTo("Nlp Detected Cancer Staging")
         }
 
         @Test
         fun `unhandled structured definition is prettified`() {
             val resource = resourceWithDisplayName("http://projectronin.io/fhir/StructureDefinition/mdaoc-conditionEncounterDiagnosis", "http://another/profile")
 
-            assertThat(resource.displayName).isEqualTo("Mdaoc Condition Encounter Diagnosis")
+            assertThat(resource.displayName).isEqualTo("Unknown Resource")
         }
 
         @Test
         fun `unhandled non-structured definition starting with http projectronin io is prettified`() {
             val resource = resourceWithDisplayName("http://projectronin.io/fhir/SomeOtherDefinition/ronin-nlpDetectedCancerStaging")
 
-            assertThat(resource.displayName).isEqualTo("Fhir Some Other Definition Ronin Nlp Detected Cancer Staging")
+            assertThat(resource.displayName).isEqualTo("Unknown Resource")
         }
 
         @Test
         fun `unhandled non-structured definition starting with http foo bar is prettified`() {
             val resource = resourceWithDisplayName("http://foo.bar/fhir/SomeOtherDefinition/ronin-nlpDetectedCancerStaging")
 
-            assertThat(resource.displayName).isEqualTo("Http Foo Bar Fhir Some Other Definition Ronin Nlp Detected Cancer Staging")
+            assertThat(resource.displayName).isEqualTo("Unknown Resource")
         }
 
         @Test

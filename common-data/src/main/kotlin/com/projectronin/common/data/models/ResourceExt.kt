@@ -5,15 +5,16 @@ package com.projectronin.common.data.models
 import com.projectronin.fhir.r4.Resource
 
 val Resource.displayName: String
-    get() = getMetaProfileOrNull(id)?.let { value ->
-        prettyNameOrNull(metaProfileDisplayNameMap.getOrDefault(value, value))
-    } ?: unknownResourceDisplayName
+    get() = getMetaProfileOrNull(id)?.let { prettyNameOrNull(it) }
+        ?: "Unknown Resource"
 
-private fun Resource.getMetaProfileOrNull(defaultValue: String?): String? =
-    meta?.profile?.firstOrNull() ?: defaultValue
+fun Resource.getMetaProfileOrNull(defaultValue: String?): String? =
+    meta?.profile?.firstOrNull { it.startsWith(projectRoninStructureDefinition) }
+        ?.removePrefix(projectRoninStructureDefinition)
+        ?: defaultValue
 
 private fun prettyNameOrNull(value: String): String? =
-    removePrefixes(value).fold("") { acc, ch ->
+    value.fold("") { acc, ch ->
         if (acc.isEmpty()) {
             if (ch.isLetterOrDigit()) {
                 // always capitalize first char
@@ -43,18 +44,4 @@ private fun prettyNameOrNull(value: String): String? =
         }
     }.trim().takeIf { it.isNotEmpty() }
 
-private fun removePrefixes(value: String): String = knownPrefixes.fold(value) { acc, prefix ->
-    acc.removePrefix(prefix)
-}
-
-private val metaProfileDisplayNameMap = mapOf(
-    "http://projectronin.io/fhir/StructureDefinition/ronin-nlpDetectedVisit" to "ED Visit"
-)
-
-private val knownPrefixes = arrayOf(
-    "http://projectronin.io",
-    "/fhir/StructureDefinition/",
-    "ronin-",
-    "nlp"
-)
-private const val unknownResourceDisplayName = "Unknown Resource"
+private const val projectRoninStructureDefinition = "http://projectronin.io/fhir/StructureDefinition/ronin-"
